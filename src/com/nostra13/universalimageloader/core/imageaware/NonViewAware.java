@@ -89,4 +89,9 @@ public class NonViewAware implements ImageAware {
 	public boolean setImageBitmap(Bitmap bitmap) { // Do nothing
 		return true;
 	}
+
+	@Override
+	public boolean setImageBackground(int resId) {
+		return false;
+	}
 }

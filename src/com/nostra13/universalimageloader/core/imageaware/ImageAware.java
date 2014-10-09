@@ -111,4 +111,11 @@ public interface ImageAware {
 	 * @return <b>true</b> if bitmap was set successfully; <b>false</b> - otherwise
 	 */
 	boolean setImageBitmap(Bitmap bitmap);
+	
+	/**
+	 * 设置ImageView背景颜色
+	 * @param resId
+	 * @return
+	 */
+	boolean setImageBackground(int resId);
 }

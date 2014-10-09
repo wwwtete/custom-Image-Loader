@@ -60,6 +60,7 @@ public class FadeInBitmapDisplayer implements BitmapDisplayer {
 
 	@Override
 	public void display(Bitmap bitmap, ImageAware imageAware, LoadedFrom loadedFrom) {
+		imageAware.getWrappedView().setBackground(null);
 		imageAware.setImageBitmap(bitmap);
 
 		if ((animateFromNetwork && loadedFrom == LoadedFrom.NETWORK) ||

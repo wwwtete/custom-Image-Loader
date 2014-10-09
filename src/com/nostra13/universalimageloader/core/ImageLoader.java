@@ -249,12 +249,18 @@ public class ImageLoader {
 					engine.submit(displayTask);
 				}
 			} else {
+				if(options.shouldShowImageOnLoadingBgColor()){
+					imageAware.setImageDrawable(null);
+				}
 				options.getDisplayer().display(bmp, imageAware, LoadedFrom.MEMORY_CACHE);
 				listener.onLoadingComplete(uri, imageAware.getWrappedView(), bmp);
 			}
 		} else {
 			if (options.shouldShowImageOnLoading()) {
 				imageAware.setImageDrawable(options.getImageOnLoading(configuration.resources));
+			}else if(options.shouldShowImageOnLoadingBgColor()){
+				imageAware.setImageDrawable(null);
+				imageAware.setImageBackground(options.getImageOnLoadingBgColorResId());
 			} else if (options.isResetViewBeforeLoading()) {
 				imageAware.setImageDrawable(null);
 			}

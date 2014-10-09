@@ -18,6 +18,7 @@ package com.nostra13.universalimageloader.core.imageaware;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.assist.ViewScaleType;
@@ -116,7 +117,7 @@ public class ImageViewAware extends ViewAware {
 	@Override
 	protected void setImageDrawableInto(Drawable drawable, View view) {
 		((ImageView) view).setImageDrawable(drawable);
-		if (drawable instanceof AnimationDrawable) {
+		if (drawable != null && drawable instanceof AnimationDrawable) {
 			((AnimationDrawable)drawable).start();
 		}
 	}
@@ -139,5 +140,19 @@ public class ImageViewAware extends ViewAware {
 			L.e(e);
 		}
 		return value;
+	}
+
+	@Override
+	public boolean setImageBackground(int resId) {
+		if (Looper.myLooper() == Looper.getMainLooper()) {
+			View view = viewRef.get();
+			if (view != null) {
+				view.setBackgroundResource(resId);
+				return true;
+			}
+		} else {
+			L.w(WARN_CANT_SET_BITMAP);
+		}
+		return false;
 	}
 }

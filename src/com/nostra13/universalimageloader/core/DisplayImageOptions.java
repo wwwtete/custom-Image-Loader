@@ -67,6 +67,7 @@ public final class DisplayImageOptions {
 	private final int imageResOnLoading;
 	private final int imageResForEmptyUri;
 	private final int imageResOnFail;
+	private final int imageBgColorResId;
 	private final Drawable imageOnLoading;
 	private final Drawable imageForEmptyUri;
 	private final Drawable imageOnFail;
@@ -89,6 +90,7 @@ public final class DisplayImageOptions {
 		imageResForEmptyUri = builder.imageResForEmptyUri;
 		imageResOnFail = builder.imageResOnFail;
 		imageOnLoading = builder.imageOnLoading;
+		imageBgColorResId = builder.imageBgColorResId;
 		imageForEmptyUri = builder.imageForEmptyUri;
 		imageOnFail = builder.imageOnFail;
 		resetViewBeforeLoading = builder.resetViewBeforeLoading;
@@ -108,6 +110,10 @@ public final class DisplayImageOptions {
 
 	public boolean shouldShowImageOnLoading() {
 		return imageOnLoading != null || imageResOnLoading != 0;
+	}
+	
+	public boolean shouldShowImageOnLoadingBgColor(){
+		return imageBgColorResId != -1;
 	}
 
 	public boolean shouldShowImageForEmptyUri() {
@@ -132,6 +138,10 @@ public final class DisplayImageOptions {
 
 	public Drawable getImageOnLoading(Resources res) {
 		return imageResOnLoading != 0 ? res.getDrawable(imageResOnLoading) : imageOnLoading;
+	}
+	
+	public int getImageOnLoadingBgColorResId(){
+		return imageBgColorResId;
 	}
 
 	public Drawable getImageForEmptyUri(Resources res) {
@@ -203,6 +213,7 @@ public final class DisplayImageOptions {
 		private int imageResOnLoading = 0;
 		private int imageResForEmptyUri = 0;
 		private int imageResOnFail = 0;
+		private int imageBgColorResId = -1;
 		private Drawable imageOnLoading = null;
 		private Drawable imageForEmptyUri = null;
 		private Drawable imageOnFail = null;
@@ -256,6 +267,16 @@ public final class DisplayImageOptions {
 		 */
 		public Builder showImageOnLoading(Drawable drawable) {
 			imageOnLoading = drawable;
+			return this;
+		}
+		
+		/**
+		 * 设置加载时ImageView的背景颜色
+		 * @param resId
+		 * @return
+		 */
+		public Builder showImageOnLoadingBackground(int resId){
+			imageBgColorResId = resId;
 			return this;
 		}
 

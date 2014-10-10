@@ -16,6 +16,7 @@
 package com.nostra13.universalimageloader.core.display;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.DecelerateInterpolator;
@@ -60,7 +61,15 @@ public class FadeInBitmapDisplayer implements BitmapDisplayer {
 
 	@Override
 	public void display(Bitmap bitmap, ImageAware imageAware, LoadedFrom loadedFrom) {
-		imageAware.getWrappedView().setBackground(null);
+		try{
+			int sdk = Build.VERSION.SDK_INT;
+			if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN)
+				imageAware.getWrappedView().setBackgroundDrawable(null);
+			else
+				imageAware.getWrappedView().setBackground(null);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		imageAware.setImageBitmap(bitmap);
 
 		if ((animateFromNetwork && loadedFrom == LoadedFrom.NETWORK) ||

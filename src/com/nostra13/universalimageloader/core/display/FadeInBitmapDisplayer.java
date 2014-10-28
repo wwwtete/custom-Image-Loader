@@ -19,8 +19,12 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
+
+import com.nineoldandroids.view.ViewHelper;
 import com.nostra13.universalimageloader.core.assist.LoadedFrom;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 
@@ -85,11 +89,27 @@ public class FadeInBitmapDisplayer implements BitmapDisplayer {
 	 * @param imageView      {@link ImageView} which display image in
 	 * @param durationMillis The length of the animation in milliseconds
 	 */
-	public static void animate(View imageView, int durationMillis) {
+	public static void animate(final View imageView, int durationMillis) {
 		if (imageView != null) {
 			AlphaAnimation fadeImage = new AlphaAnimation(0, 1);
 			fadeImage.setDuration(durationMillis);
 			fadeImage.setInterpolator(new DecelerateInterpolator());
+			fadeImage.setAnimationListener(new AnimationListener() {
+				
+				@Override
+				public void onAnimationStart(Animation animation) {
+				}
+				
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+				}
+				
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					imageView.clearAnimation();
+					ViewHelper.setAlpha(imageView, 1);
+				}
+			});
 			imageView.startAnimation(fadeImage);
 		}
 	}
